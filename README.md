@@ -1,8 +1,9 @@
 # gpttest
 
 > frontend
+ Implement a simple front-end framework using element react
 
-* Implement a simple front-end framework using element react
+- start project
 
 > background
 
