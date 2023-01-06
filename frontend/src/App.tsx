@@ -1,68 +1,61 @@
-import React,{ useState,useRef} from 'react'
-import { Spin } from 'antd';
-import {apiGenerateImage} from './api'
+import React, { useState, useRef } from 'react'
+import { apiGenerateImage } from './api'
+import { Input, Spin } from 'antd';
+const { Search } = Input;
+
+
 
 function App() {
-  //声明一个变量
-  const [content, setContent] = useState('')
-  const [analysisResult, setAnalysisResult] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const analysisBox = useRef(null);
-  const [imageLoading, setImageLoading] = useState(false);
-  const [analysisLoading, setAnalysisLoading] = useState(false);
-  const [currentStatement, setCurrentStatement] = useState('');
+  const [imageLoading, setImageLoading] = useState(false)
+  const [imageUrl, setImageUrl] = useState(false)
+  const [contentValue, setContentValue] = useState('')
 
-  function reset() {
-    setContent('');
-    setAnalysisResult('');
-    setImageUrl('');
+
+
+  function handleClick(){        
+    setImageLoading(true)
+    apiGenerateImage(contentValue).then(({ data })=> {
+    setImageLoading(false)
+    setImageUrl(data.data)
+  })
+}
+
+function handleKeyPress(e){
+  if(e.key === 'Enter'){
+    handleClick()
+  }
+}
+
+function reset(){
+  if(contentValue === ''){
+    setImageUrl('')
   }
 
-  function handleCheck() {
-    const contentValue = content;
-    setCurrentStatement(content);
-    reset();
-
-    setImageLoading(true);
-    setAnalysisLoading(true);
-
-    apiGenerateImage(contentValue).then(({ data }) => {
-      setImageUrl(data.data);
-      setImageLoading(false);
-    });
-    // apiConversation(contentValue, (data) => {
-    //   setAnalysisResult(data);
-    //   setAnalysisLoading(false);
-    //   if (analysisBox.current) {
-    //     analysisBox.current.scrollTop = analysisBox.current.scrollHeight;
-    //   }
-    // });
-  }
+}
+  
 
   return (
-    <div>
-      <div className="">
-        <h1 className="mb-9">{currentStatement}</h1>
-        <div className="flex mb-9">
-          <div className="w-96 h-96 border-solid border-2 border-purple-500 flex flex-col">
-            <h2 className="text-xl">图片</h2>
-
-            {imageLoading && <Spin/>}
-            <div className="flex grow ">
-              <img className="block m-auto" src={imageUrl} alt="" srcSet="" />
-            </div>
-          </div>
-          <div className="whitespace-pre-line w-96 h-96 border-solid border-2 border-red-500 overflow-auto" ref={analysisBox}>
-            <h2 className="text-xl">解析</h2>
-            {/* {analysisLoading && <Spin/>} */}
-            <div className="p-6">
-              {analysisResult}
-            </div>
-          </div>
+    <div className='main'>
+      <div className='content'>
+        <h1>Image Generator</h1>
+        <div className='toptop'>
+          {imageLoading}
+          <img src={imageUrl} alt="" srcSet=''/>
         </div>
-        <div>
-          <input type="text" value={content} onChange={(e) => setContent(e.target.value)} />
-          <button onClick={handleCheck}>check</button>
+        <div className='search'>
+          <Search
+            placeholder="Please enter the need to generate the image content"
+            //如果加载成功，就显示图片，加载不成功则显示加载中
+            enterButton="go"
+            size='large'
+            value={contentValue}
+            onChange={(e) => setContentValue(e.target.value)}
+            onSearch={handleClick}
+            onKeyPress={handleKeyPress}
+            loading={imageLoading}
+            //当点击输入框为空时，清空图片
+            onClick={reset}
+          />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
@@ -67,4 +67,58 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: 900;
+    font-size: 20px;
+    font-family: Marlin, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
+.main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: .9;
+    background: url(https://static.oschina.net/uploads/space/2021/0812/082336_1HP5_4937141.png)
+}
+.content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 600px;
+  justify-content: space-evenly;
+  width: 60%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+  h1{
+    font-size: 2.2em;
+    font-weight: 900;
+    color: rgba(0, 0, 0, .6);
+    margin-top: 20px;
+  }
+  .toptop{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto;
+    height: 256px;
+    width: 256px;
+  }
+  image{
+    height: 100%;
+    width: 100%;
+  }
+  .search{
+    margin: 0 auto;
+    width: 85%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
